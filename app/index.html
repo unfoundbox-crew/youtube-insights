@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#060609" />
+  <title>Unfoundbox Galaxy</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main id="app" class="app-shell">
+    <canvas id="galaxy"></canvas>
+
+    <header class="topbar glass">
+      <div class="brand"><span class="brand-mark">◌</span><div><strong>UNFOUNDBOX GALAXY</strong><small id="countText">loading…</small></div></div>
+      <div class="search-wrap"><span>⌕</span><input id="search" placeholder="Search your history…" autocomplete="off"/><kbd>/</kbd></div>
+      <div id="engineMeta" class="meta-pill"></div>
+    </header>
+
+    <section id="clusters" class="cluster-strip"></section>
+
+    <aside id="inspector" class="inspector glass">
+      <button id="closeInspector" class="close">×</button>
+      <div id="inspectorBody" class="empty-inspector"><div class="orbit-icon">◎</div><p>Select a point to inspect the video and its semantic neighborhood.</p></div>
+    </aside>
+
+    <footer class="timeline glass">
+      <button id="play" class="play">▶</button>
+      <div class="timeline-copy"><strong id="timelineNow">All history</strong><small id="timelineBounds"></small></div>
+      <input id="timeline" aria-label="History timeline" type="range" min="0" max="100" step="0.1" value="100" />
+      <div id="visibleCount" class="timeline-count"></div>
+    </footer>
+
+    <div class="help">drag orbit · scroll zoom · click inspect · <kbd>esc</kbd> reset</div>
+    <div id="tooltip" class="tooltip glass" hidden></div>
+    <div id="loadState" class="load-state"><div class="spinner"></div><p>Loading galaxy…</p></div>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

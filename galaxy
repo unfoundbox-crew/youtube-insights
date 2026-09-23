@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$ROOT"
+
+activate() {
+  if [ ! -d .venv ]; then
+    echo "Missing .venv. Run ./setup.sh first." >&2
+    exit 1
+  fi
+  . .venv/bin/activate
+}
+
+cmd="${1:-help}"
+shift || true
+case "$cmd" in
+  semantic-setup)
+    if [ ! -d .venv ]; then echo "Run ./setup.sh first." >&2; exit 1; fi
+    . .venv/bin/activate
+    python -m pip install -r requirements-semantic.txt
+    ;;
+  build)
+    activate
+    python pipeline/build_galaxy.py "$@" --output app/data/galaxy.json
+    ;;
+  inspect)
+    activate
+    python pipeline/build_galaxy.py "$@" --inspect
+    ;;
+  demo)
+    activate
+    python pipeline/demo_data.py --output app/data/galaxy.json
+    ;;
+  dev)
+    activate
+    cd app
+    echo "Open http://127.0.0.1:5173"
+    python -m http.server 5173 --bind 127.0.0.1
+    ;;
+
+  *)
+    cat <<'HELP'
+Usage:
+  ./galaxy semantic-setup
+  ./galaxy build <takeout.zip|folder|watch-history.json|watch-history.html> [options]
+  ./galaxy inspect <takeout>
+  ./galaxy demo
+  ./galaxy dev
+HELP
+    ;;
+esac
